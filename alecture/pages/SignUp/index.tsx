@@ -43,7 +43,7 @@ const SignUp = () => {
       <Form onSubmit={onSubmit}>
         <Label id="email-label">
           <span>이메일 주소</span>
-          test
+
           <div>
             <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} />
           </div>
