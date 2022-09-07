@@ -1,18 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Error, Form, Header, Input, Label, LinkContainer, Success } from '@pages/SignUp/styles';
+import useInput from '@hooks/useInput';
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail, onChangeEmail] = useInput('');
+  const [nickname, , onChangeNickname] = useInput(''); // 커스텀 훅을 이용할 때, 빈 값으로 구조분해 하게 되면 그 자리를 밑에서 함수 선언함으로써 사용할 수 있게 한다.
+  const [password, setPassword] = useInput('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [mismatchError, setMismatchError] = useState(false);
-  const onChangeEmail = useCallback((e) => {
-    setEmail(e.target.value);
-  }, []);
-  const onChangeNickname = useCallback((e) => {
-    setNickname(e.target.value);
-  }, []);
+
   const onChangePassword = useCallback(
     (e) => {
       setPassword(e.target.value);
