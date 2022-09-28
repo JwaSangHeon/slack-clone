@@ -26,6 +26,7 @@ import { IUser } from '@typings/db';
 import { Button, Input, Label } from '@pages/LogIn/styles';
 import useInput from '@hooks/useInput';
 import Modal from '@components/Modal';
+import { toast } from 'react-toastify';
 
 const Channel = loadable(() => import('@pages/Channel'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage'));
@@ -50,6 +51,11 @@ const Workspace: FC = () => {
     setShowUserMenu((prev) => !prev);
   }, []);
 
+  const onCloseUserProfile = useCallback((e) => {
+    e.stopPropagation();
+    setShowUserMenu(false);
+  }, []);
+
   const onClickCreateWorkSpace = useCallback(() => {
     setShowCreateWorkSpaceModal(true);
   }, []);
@@ -57,7 +63,34 @@ const Workspace: FC = () => {
   const onCloseModal = useCallback(() => {
     setShowCreateWorkSpaceModal(false);
   }, []);
-  const onCreateWorkSpace = useCallback(() => {}, []);
+
+  const onCreateWorkSpace = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!newWorkspace || !newWorkspace.trim()) return;
+      if (!newUrl || !newUrl.trim()) return;
+      axios
+        .post(
+          'http://localhost:3095/api/workspaces',
+          {
+            workspace: newWorkspace,
+            url: newUrl,
+          },
+          { withCredentials: true },
+        )
+        .then(() => {
+          mutate();
+          setShowCreateWorkSpaceModal(false);
+          setNewWorkspace('');
+          setNewUrl('');
+        })
+        .catch((err) => {
+          console.dir(err);
+          toast.error(error.response.data, { position: 'bottom-center' });
+        });
+    },
+    [newUrl, newWorkspace],
+  );
 
   if (!userData) {
     return <Redirect to="/login" />;
@@ -70,7 +103,7 @@ const Workspace: FC = () => {
           <span onClick={onClickUserProfile}>
             <ProfileImg src={gravatar.url(userData.email, { s: '28px', d: 'retro' })} alt={userData.nickname} />
             {showUserMenu && (
-              <Menu style={{ right: 0, top: 38 }} show={showUserMenu} onCloseModal={onClickUserProfile}>
+              <Menu style={{ right: 0, top: 38 }} show={showUserMenu} onCloseModal={onCloseUserProfile}>
                 <ProfileModal>
                   <img src={gravatar.url(userData.email, { s: '36px', d: 'retro' })} alt={userData.nickname} />
                   <div>
@@ -86,7 +119,7 @@ const Workspace: FC = () => {
       </Header>
       <WorkspaceWrapper>
         <Workspaces>
-          {userData.Workspaces.map((ws) => {
+          {userData.Workspaces?.map((ws) => {
             return (
               <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
                 <WorkspaceButton>{ws.name.slice(0, 1).toUpperCase()}</WorkspaceButton>
