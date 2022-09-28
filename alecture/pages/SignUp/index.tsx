@@ -12,7 +12,7 @@ import fetcher from '@utils/fetcher';
 // - return: 'ok'
 
 const SignUp = () => {
-  const { data, error } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error } = useSWR('/api/users', fetcher);
   const [email, , onChangeEmail] = useInput('');
   const [nickname, , onChangeNickname] = useInput(''); // 커스텀 훅을 이용할 때, 빈 값으로 구조분해 하게 되면 그 자리를 밑에서 함수 선언함으로써 사용할 수 있게 한다.
   const [password, setPassword] = useInput('');
@@ -43,7 +43,7 @@ const SignUp = () => {
         setSignUpError('');
         setSignUpSuccess(false); // 비동기 처리전에 초기화를 진행한다
         axios
-          .post('http://localhost:3095/api/users', {
+          .post('/api/users', {
             email,
             nickname,
             password,

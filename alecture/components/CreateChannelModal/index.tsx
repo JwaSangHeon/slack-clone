@@ -22,14 +22,14 @@ const CreateChannelModal: VFC<Props> = ({ show, onCloseModal, setShowCreateChann
       e.preventDefault();
       axios
         .post(
-          `http://localhost:3095/api/workspaces/${workspace}/channels`,
+          `/api/workspaces/${workspace}/channels`,
           {
             name: newChannel,
           },
           { withCredentials: true },
         )
         .then(() => {
-          mutate(`http://localhost:3095/api/workspaces/${workspace}/channels`);
+          mutate(`/api/workspaces/${workspace}/channels`);
           setShowCreateChannelModal(false);
           setNewChannel('');
         })
@@ -38,7 +38,7 @@ const CreateChannelModal: VFC<Props> = ({ show, onCloseModal, setShowCreateChann
           toast.error(error.response?.data, { position: 'bottom-center' });
         });
     },
-    [newChannel],
+    [newChannel, workspace],
   );
 
   return (
