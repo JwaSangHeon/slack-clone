@@ -152,7 +152,7 @@ const Workspace: VFC = () => {
         <Workspaces>
           {userData.Workspaces?.map((ws) => {
             return (
-              <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
+              <Link key={ws.id} to={`/workspace/${ws.url}/channel/일반`}>
                 <WorkspaceButton>{ws.name.slice(0, 1).toUpperCase()}</WorkspaceButton>
               </Link>
             );
@@ -178,7 +178,7 @@ const Workspace: VFC = () => {
         <Chats>
           <Switch>
             <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
-            <Route path="/workspace/:workspace/dm:id" component={DirectMessage} />
+            <Route path="/workspace/:workspace/dm/:id" component={DirectMessage} />
           </Switch>
         </Chats>
       </WorkspaceWrapper>
