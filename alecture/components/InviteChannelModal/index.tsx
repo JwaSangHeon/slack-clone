@@ -18,10 +18,10 @@ const InviteChannelModal: VFC<Props> = ({ show, onCloseModal, setShowInviteChann
   const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
   const [newMember, setNewMember, onChangeNewMember] = useInput('');
   const { data: userData } = useSWR<IUser>('/api/users', fetcher);
-  const { data } = useSWR<IChannel[]>(
-    userData ? `/api/workspaces/${workspace}/channels/${channel}/members` : null,
-    fetcher,
-  );
+  // const { data } = useSWR<IChannel[]>(
+  //   userData ? `/api/workspaces/${workspace}/channels/${channel}/members` : null,
+  //   fetcher,
+  // );
 
   const oninviteMember = useCallback(
     (e) => {
