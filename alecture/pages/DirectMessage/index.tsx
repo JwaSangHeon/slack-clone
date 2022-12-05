@@ -17,9 +17,10 @@ const DirectMessage = () => {
   const { data: myData } = useSWR(`/api/users`, fetcher);
   const [chat, setChat, onChangeChat] = useInput('');
   const { data: chatData, mutate: mutateChat } = useSWR<IDM[]>(
-    `/api/workspace/${workspace}/dms/${id}/chats?perPage=20&page=1`,
+    `/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=1`,
     fetcher,
   );
+  console.log(chatData);
 
   const onSubmitForm = useCallback(
     (e) => {
