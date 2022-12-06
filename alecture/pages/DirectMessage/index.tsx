@@ -20,18 +20,18 @@ const DirectMessage = () => {
     `/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=1`,
     fetcher,
   );
-  console.log(chatData);
+  console.log(workspace, id);
 
   const onSubmitForm = useCallback(
     (e) => {
       e.preventDefault();
-      if (chat?.trim() && chatData) {
+      if (chat?.trim()) {
         axios
           .post(`/api/workspaces/${workspace}/dms/${id}/chats`, {
             content: chat,
           })
           .then(() => {
-            // mutate(false);
+            mutate(false);
             setChat('');
           })
           .catch(console.error);

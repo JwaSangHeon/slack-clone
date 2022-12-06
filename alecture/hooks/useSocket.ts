@@ -7,7 +7,7 @@ const sockets: { [key: string]: SocketIOClient.Socket } = {};
 
 const useSocket = (workspace?: string): [SocketIOClient.Socket | undefined, () => void] => {
   const disconnect = useCallback(() => {
-    if (workspace) {
+    if (workspace && sockets[workspace]) {
       sockets[workspace].disconnect();
       delete sockets[workspace];
     }
