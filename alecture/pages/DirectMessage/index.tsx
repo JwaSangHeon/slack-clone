@@ -20,7 +20,6 @@ const DirectMessage = () => {
     `/api/workspaces/${workspace}/dms/${id}/chats?perPage=20&page=1`,
     fetcher,
   );
-  console.log(workspace, id);
 
   const onSubmitForm = useCallback(
     (e) => {

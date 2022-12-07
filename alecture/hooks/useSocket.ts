@@ -18,7 +18,9 @@ const useSocket = (workspace?: string): [SocketIOClient.Socket | undefined, () =
   }
 
   if (!sockets[workspace]) {
-    sockets[workspace] = io.connect(`${backUrl}/ws-${workspace}`);
+    sockets[workspace] = io.connect(`${backUrl}/ws-${workspace}`, {
+      transportOptions: ['websocket'],
+    });
   }
 
   return [sockets[workspace], disconnect];

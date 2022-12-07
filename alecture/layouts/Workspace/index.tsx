@@ -65,7 +65,7 @@ const Workspace: VFC = () => {
     return () => {
       disconnect();
     };
-  }, [workspace]);
+  }, [workspace, disconnect]);
 
   const onLogout = useCallback(() => {
     axios
