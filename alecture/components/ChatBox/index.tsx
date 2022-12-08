@@ -39,6 +39,7 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
     },
     [onSubmitForm],
   );
+
   const renderSuggestion = useCallback(
     (
       suggestion: SuggestionDataItem,
@@ -58,7 +59,7 @@ const ChatBox = ({ chat, onSubmitForm, onChangeChat, placeholder }: Props) => {
         </EachMention>
       );
     },
-    [],
+    [memberData],
   );
   return (
     <ChatArea>
